@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EnergyManager>
+	<name>microgrid</name>
+	<energyMgtParameters>
+		<controlUpdatePeriod>900</controlUpdatePeriod>
+		<samplePeriod>900</samplePeriod>
+		<horizon>86400</horizon>
+	</energyMgtParameters>
+	<Contracts>
+		<DcmContract>
+			<name>contract</name>
+			<type>electric</type>
+			<UpdateThresholdsFromMeasuredPower>False</UpdateThresholdsFromMeasuredPower>
+			<UseDynamicTou>True</UseDynamicTou>
+			<AddPeakLoadContribution>False</AddPeakLoadContribution>
+			<DcmDescription>
+				<non_coincidental_price>10</non_coincidental_price>
+			</DcmDescription>
+		</DcmContract>
+	</Contracts>
+	<EnergyHubs>
+		<EnergyHub>
+			<name>energy_hub</name>
+			<gridConnection>
+				<electric>
+					<max_import>2000</max_import>
+					<max_export>2000</max_export>
+					<contract>contract</contract>
+				</electric>
+				<thermal>
+					<max_import>0</max_import>
+					<max_export>0</max_export>
+				</thermal>
+			</gridConnection>
+			<nonControllableSystems>
+				<NonContSys>
+					<name>building</name>
+					<type>electric</type>	<!-- electric, thermal, multienergy -->
+				</NonContSys>
+			</nonControllableSystems>
+			<flexibleSystems></flexibleSystems>
+			<controllableSystems>
+				<Battery>
+					<name>battery</name>
+					<capacity>300</capacity>
+					<powerRate>1</powerRate>
+					<chargingEfficiency>0.95</chargingEfficiency>
+					<dischargingEfficiency>0.95</dischargingEfficiency>
+					<minSoc>0</minSoc>
+					<maxSoc>1</maxSoc>
+					<weightPowerProfileVariations>0.03</weightPowerProfileVariations>
+					<flagFinalSocGreaterThanInitialSoc>False</flagFinalSocGreaterThanInitialSoc>		<!-- True, False -->
+				</Battery>
+				<Pv>
+					<name>pv</name>
+					<capex>1000</capex>
+					<curtailable>False</curtailable>
+				</Pv>
+			</controllableSystems>
+		</EnergyHub>
+	</EnergyHubs>
+</EnergyManager>
